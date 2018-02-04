@@ -11,7 +11,11 @@ gulp.task('default', defaultTask);
 function defaultTask() {
   gulp.src('src/**/*.dot')
     .pipe(tap(file => {
-      file.contents = Buffer.from(Viz(file.contents.toString()))
+      //try {
+      file.contents = Buffer.from(Viz(file.contents.toString()));
+      // } catch (e) {
+      //   file.contents = Buffer.from(e.toString());
+      // }
     }))
     .pipe(ext.replace('svg'))
     .pipe(svgo())
