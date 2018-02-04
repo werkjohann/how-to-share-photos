@@ -55,9 +55,9 @@ digraph apple_photos {
 		email [label="Send via Email
 			todo: check all type imports
 			w/ maildrop, w/ actual size
+			from-ios: no video downres, no png->jpeg, DOES heif -> JPEG,
 			from-mac: png->jpeg, video downres, heif -> JPEG,
 			from-mac: dnd: no video downres, no png->jpeg, DOES heif -> JPEG,
-			from-ios: no video downres, no png->jpeg, DOES heif -> JPEG,
 			note about actual size, JPEG conversion, lossy special types"];
 		imessage [label="Send via iMessage
 			ios-to-ios:
@@ -156,9 +156,13 @@ digraph apple_photos {
 	have_live_photo_etc__email [label="Are you
 		sharing any
 		'Live Photos'?"];
-	airdrop__from_ios [label="Are you
-		using an iOS
-		device?"];
+	{
+		node [label="Are you
+			using an iOS
+			device?"];
+		from_ios__airdrop;
+		from_ios__email;
+	}
 	{
 		node [label="Do you want to avoid
 			coverting lossless
@@ -167,6 +171,7 @@ digraph apple_photos {
 			JPEG)?"];
 		avoid_convert_type_lossless_to_lossy__airdrop_mac;
 		avoid_convert_type_lossless_to_lossy__imessage;
+		avoid_convert_type_lossless_to_lossy__email_mac;
 	}
 	airdrop_mac_mixed [label="Are you sharing
 		both videos and
@@ -205,7 +210,7 @@ digraph apple_photos {
 	avoid_convert_type_lossless_to_lossy__imessage -> video__imessage [taillabel="No"];
 	avoid_convert_type_lossless_to_lossy__imessage -> far_away__imessage [taillabel="Yes"];
 
-	far_away__imessage -> airdrop__from_ios [taillabel="No"];
+	far_away__imessage -> from_ios__airdrop [taillabel="No"];
 	far_away__imessage -> SOL [taillabel="Yes"];
 
 	video__imessage -> avoid_downres__video__imessage [taillabel="Yes"];
@@ -218,10 +223,10 @@ digraph apple_photos {
 	far_away -> avoid_downres__email_or_icps [taillabel="Yes"];
 
 	have_apple__airdrop -> avoid_downres__email_or_icps [taillabel="No"];
-	have_apple__airdrop -> airdrop__from_ios [taillabel="Yes"];
+	have_apple__airdrop -> from_ios__airdrop [taillabel="Yes"];
 
-	airdrop__from_ios -> avoid_convert_type_lossless_to_lossy__airdrop_mac [taillabel="No"];
-	airdrop__from_ios -> airdrop [taillabel="Yes"];
+	from_ios__airdrop -> avoid_convert_type_lossless_to_lossy__airdrop_mac [taillabel="No"];
+	from_ios__airdrop -> airdrop [taillabel="Yes"];
 
 	avoid_convert_type_lossless_to_lossy__airdrop_mac -> airdrop_mac_mixed [taillabel="No"];
 	avoid_convert_type_lossless_to_lossy__airdrop_mac -> SOL [taillabel="Yes"];
@@ -241,8 +246,14 @@ digraph apple_photos {
 	avoid_convert_type_lossy_to_lossy__email -> have_live_photo_etc__email [taillabel="No"];
 	avoid_convert_type_lossy_to_lossy__email -> SOL [taillabel="Yes"];
 
-	have_live_photo_etc__email -> email [taillabel="No"]; // todo: add recipient device check
+	have_live_photo_etc__email -> from_ios__email [taillabel="No"]; // todo: add recipient device check
 	have_live_photo_etc__email -> SOL [taillabel="Yes"];
+
+	from_ios__email -> avoid_convert_type_lossless_to_lossy__email_mac [taillabel="No"];
+	from_ios__email -> email [taillabel="Yes"];
+
+	avoid_convert_type_lossless_to_lossy__email_mac -> email [taillabel="No"];
+	avoid_convert_type_lossless_to_lossy__email_mac -> SOL [taillabel="Yes"];
 
 	/* {
 		rank=same;
