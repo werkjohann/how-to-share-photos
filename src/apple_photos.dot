@@ -1,3 +1,4 @@
+
 // Comprehensive Guide to Sharing with Apple Photos
 // list sources
 // other bugs:
@@ -15,6 +16,7 @@ digraph apple_photos {
 	graph [fontname = "helvetica"];
 	node [fontname = "helvetica"];
 	edge [fontname = "helvetica"];
+
 
 	#rankdir=LR;
 	{
@@ -41,24 +43,33 @@ digraph apple_photos {
 			AirDrop preserves ____
 			___ note about processing time and related failure ___
 			reconverted editted/portriat
-			todo: test from-Mac videos/all types
 			intermitent fail: slo-mo, screenshot lost type tag.
 			from-ios-to-ios: slo-mo lost type tag.
 			from-Mac-to-mac
 			If you AirDrop to a Mac be sure the recipient chooses to ___ - which is not the default option - otherwise Live Photos, ____ will not send correctly.
 			(If you try to AirDrop to your own Mac the photos are automatically sent to the Finder, so Live Photos, ____ will never send correctly.)"];
+			todo: test airdrop to own iPhone? (from mac?)
 		email [label="Send via Email
 			w/ maildrop, w/ actual size
+			from-mac: png->jpeg, video downres, heif -> JPEG,
+			from-mac: dnd: no video downres, no png->jpeg, DOES heif -> JPEG,
+			from-ios: no video downres, no png->jpeg, DOES heif -> JPEG,
 			note about actual size, JPEG conversion, lossy special types"];
 		imessage [label="Send via iMessage
-			todo: types check (inc PNG -> JPEG)
-			make sure not to MMS"];
+			todo: test more scaled down video
+			ios-to-ios: does lossy to lossy, does png to jpeg. slo mo, selfie, and screenshot tagging lost
+				- scaled down video
+			mac-to-ios: can't choose >1 video
+				- same as ios-to-ios
+				- scaled down video
+			mac-to-ios: dnd: crashed Photos the first time. second time I had all the images in the message, but it only sent some of them (the others were left in the text feild)
+				- lost types:  screnshot, slomo, selfie, live. png->jpeg, heif->jpg
+				- scaled down video
+			make sure not to MMS???"];
 		icps [label="Send via iCloud Photo Sharing
 			todo: note about public links, as needed
 			steps for limits: https://support.apple.com/en-us/HT202786, https://support.apple.com/en-us/HT202299
 			lossy"]; */
-
-		//SOL -> icps -> airdrop -> email -> imessage [ style=invis ];
 	}
 
 	node [shape=diamond];
@@ -73,10 +84,9 @@ digraph apple_photos {
 		shared?"];
 	editable [label="Do you want the
 		photos/videos to be
-		fully editable (as if
-		the recipients took
-		them)? (See note
-		'location'.)"];
+		fully editable (as
+		if the recipients
+		took them)?"];
 	editable_portrait_etc [label="Do you want to share
 		'Portrait', 'Burst',
 		or 'Slo-mo'
@@ -95,7 +105,7 @@ digraph apple_photos {
 	{
 		node [label="Do you want to avoid type
 			conversion (e.g. recompression
-			due to HEIC to JPEG
+			due to HEIF to JPEG
 			conversion) as much as
 			possible? (Photos will always
 			send certain items like
@@ -131,78 +141,115 @@ digraph apple_photos {
 	have_live_photo_etc__avoid_downres [label="Are you
 		sharing any
 		'Live Photos'?"];
-	airdrop__to_ios [label="Are the
-		recipients
-		on an iOS
+	airdrop__from_ios [label="Are you
+		using an iOS
 		device?"];
 	airdrop_ios_note [shape=rect, style="rounded"]; // certain type's metadata lost
-	airdrop_mac_lossy [label="Do you want to avoid
-		coverting lossless
-		images to lossy
-		images (e.g. PNG to
-		JPEG)?"];
+	{
+		node [label="Do you want to avoid
+			coverting lossless
+			images to lossy
+			images (e.g. PNG to
+			JPEG)?"];
+		avoid_convert_type_lossy_to_lossy__airdrop_mac;
+		avoid_convert_type_lossy_to_lossy__airdrop_mac;
+	}
 	airdrop_mac_mixed [label="Are you sharing
 		both videos and
 		'Live Photos'
 		the same time?"];
 	airdrop_mac_note [shape=rect, style="rounded"]; // if photo/live: choose "Photos". if videos, can use finder, and drag into Photos, but certain metadata will be lost
 
+	edge [labeldistance=3];
 
-	retouch -> editable [taillabel="No" labeldistance=3];
-	retouch -> SOL [taillabel="Yes" labeldistance=3];
+	retouch -> editable [taillabel="No"];
+	retouch -> SOL [taillabel="Yes"];
 
-	editable -> multiple_photos [taillabel="No" labeldistance=3];
-	editable -> editable_portrait_etc [label=Yes];
+	editable -> multiple_photos [taillabel="No"];
+	editable -> editable_portrait_etc [taillabel="Yes"];
 
-	editable_portrait_etc -> multiple_photos [taillabel="No" labeldistance=3];
-	editable_portrait_etc -> SOL [taillabel="Yes" labeldistance=3];
+	editable_portrait_etc -> multiple_photos [taillabel="No"];
+	editable_portrait_etc -> SOL [taillabel="Yes"];
 
-	multiple_photos -> have_apple__imessage [taillabel="No" labeldistance=3];
-	multiple_photos -> want_collection [taillabel="Yes" labeldistance=3];
+	multiple_photos -> have_apple__imessage [taillabel="No"];
+	multiple_photos -> want_collection [taillabel="Yes"];
 
-	want_collection -> far_away [taillabel="No" labeldistance=3];
-	want_collection -> avoid_convert_type_lossy_to_lossy__collection [taillabel="Yes" labeldistance=3];
+	want_collection -> far_away [taillabel="No"];
+	want_collection -> avoid_convert_type_lossy_to_lossy__collection [taillabel="Yes"];
 
-	avoid_convert_type_lossy_to_lossy__collection -> avoid_downres__collection [taillabel="No" labeldistance=3];
-	avoid_convert_type_lossy_to_lossy__collection -> SOL [taillabel="Yes" labeldistance=3];
+	avoid_convert_type_lossy_to_lossy__collection -> avoid_downres__collection [taillabel="No"];
+	avoid_convert_type_lossy_to_lossy__collection -> SOL [taillabel="Yes"];
 
-	avoid_downres__collection -> reordering [taillabel="No" labeldistance=3];
-	avoid_downres__collection -> SOL [taillabel="Yes" labeldistance=3];
+	avoid_downres__collection -> reordering [taillabel="No"];
+	avoid_downres__collection -> SOL [taillabel="Yes"];
 
-	reordering -> icps [taillabel="No" labeldistance=3];
-	reordering -> SOL [taillabel="Yes" labeldistance=3];
+	reordering -> icps [taillabel="No"];
+	reordering -> SOL [taillabel="Yes"];
 
-	have_apple__imessage -> avoid_convert_type_lossy_to_lossy [taillabel="No" labeldistance=3];
-	have_apple__imessage -> imessage [taillabel="Yes" labeldistance=3];
+	have_apple__imessage -> avoid_convert_type_lossy_to_lossy [taillabel="No"];
+	have_apple__imessage -> imessage [taillabel="Yes"];
 
-	far_away -> have_apple__airdrop [taillabel="No" labeldistance=3];
-	far_away -> avoid_convert_type_lossy_to_lossy [taillabel="Yes" labeldistance=3];
+	far_away -> have_apple__airdrop [taillabel="No"];
+	far_away -> avoid_convert_type_lossy_to_lossy [taillabel="Yes"];
 
-	have_apple__airdrop -> avoid_convert_type_lossy_to_lossy [taillabel="No" labeldistance=3];
-	have_apple__airdrop -> airdrop__to_ios [taillabel="Yes" labeldistance=3];
+	have_apple__airdrop -> avoid_convert_type_lossy_to_lossy [taillabel="No"];
+	have_apple__airdrop -> airdrop__from_ios [taillabel="Yes"];
 
-	airdrop__to_ios -> airdrop_mac_lossy [taillabel="No" labeldistance=3];
-	airdrop__to_ios -> airdrop_ios_note [taillabel="Yes" labeldistance=3];
+	airdrop__from_ios -> avoid_convert_type_lossy_to_lossy__airdrop_mac [taillabel="No"];
+	airdrop__from_ios -> airdrop_ios_note [taillabel="Yes"];
 
 	airdrop_ios_note -> airdrop;
 
-	airdrop_mac_lossy -> airdrop_mac_mixed [taillabel="No" labeldistance=3];
-	airdrop_mac_lossy -> SOL [taillabel="Yes" labeldistance=3];
+	avoid_convert_type_lossy_to_lossy__airdrop_mac -> airdrop_mac_mixed [taillabel="No"];
+	avoid_convert_type_lossy_to_lossy__airdrop_mac -> SOL [taillabel="Yes"];
 
-	airdrop_mac_mixed -> airdrop_mac_note [taillabel="No" labeldistance=3];
-	airdrop_mac_mixed -> SOL [taillabel="Yes" labeldistance=3];
+	airdrop_mac_mixed -> airdrop_mac_note [taillabel="No"];
+	airdrop_mac_mixed -> SOL [taillabel="Yes"];
 
 	airdrop_mac_note -> airdrop;
 
-	avoid_convert_type_lossy_to_lossy -> avoid_downres [taillabel="No" labeldistance=3];
-	avoid_convert_type_lossy_to_lossy -> SOL [taillabel="Yes" labeldistance=3];
+	avoid_convert_type_lossy_to_lossy -> avoid_downres [taillabel="No"];
+	avoid_convert_type_lossy_to_lossy -> SOL [taillabel="Yes"];
 
-	avoid_downres -> icps [taillabel="No" labeldistance=3];
-	avoid_downres -> have_live_photo_etc__avoid_downres [taillabel="Yes" labeldistance=3];
+	avoid_downres -> icps [taillabel="No"];
+	avoid_downres -> have_live_photo_etc__avoid_downres [taillabel="Yes"];
 
-	have_live_photo_etc__avoid_downres -> email [taillabel="No" labeldistance=3]; // todo: add recipient device check
-	have_live_photo_etc__avoid_downres -> SOL [taillabel="Yes" labeldistance=3];
+	have_live_photo_etc__avoid_downres -> email [taillabel="No"]; // todo: add recipient device check
+	have_live_photo_etc__avoid_downres -> SOL [taillabel="Yes"];
 
+	{
+		rank=same;
+		airdrop_ios_note;
+		airdrop_mac_note;
+	}
+
+	{
+		rank=same;
+		avoid_convert_type_lossy_to_lossy__collection;
+		far_away;
+	}
+
+	{
+		rank = same;
+		have_apple__airdrop;
+		avoid_downres__collection;
+	}
+
+	/* {
+		rank = same;
+		reordering;
+		avoid_convert_type_lossy_to_lossy;
+	} */
+
+	{
+		rank=same;
+		avoid_convert_type_lossy_to_lossy__airdrop_mac;
+		avoid_downres; //far_away;
+	}
+
+	{
+		SOL -> icps -> email -> airdrop -> imessage [ style=invis ];
+	}
 
 	/* {
 		rank = same;
