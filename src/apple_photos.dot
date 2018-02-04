@@ -46,6 +46,8 @@ digraph apple_photos {
 			intermitent fail: slo-mo, screenshot lost type tag.
 			from-ios-to-ios: slo-mo lost type tag.
 			from-Mac-to-mac
+			ios note: certain type's metadata lost
+			mac note: if photo/live: choose "Photos". if videos, can use finder, and drag into Photos, but certain metadata will be lost
 			If you AirDrop to a Mac be sure the recipient chooses to ___ - which is not the default option - otherwise Live Photos, ____ will not send correctly.
 			(If you try to AirDrop to your own Mac the photos are automatically sent to the Finder, so Live Photos, ____ will never send correctly.)"];
 			todo: test airdrop to own iPhone? (from mac?)
@@ -66,11 +68,9 @@ digraph apple_photos {
 			mac-to-ios:
 				- can't choose >1 video
 				- same as ios-to-ios
-				- scaled down video
 			mac-to-ios: dnd: crashed Photos the first time. second time I had all the images in the message, but it only sent some of them (the others were left in the text feild)
 				- same as ios-to-ios
 				- added lost types:  live.
-				- scaled down video
 			make sure not to MMS???"];
 		icps [label="Send via iCloud Photo Sharing
 			todo: note about public links, as needed
@@ -119,6 +119,7 @@ digraph apple_photos {
 			photos as JPEG.)"]; # todo: note on how to set such up, less quality, larger size. should test editted video
 		avoid_convert_type_lossy_to_lossy__icps;
 		avoid_convert_type_lossy_to_lossy__email;
+		avoid_convert_type_lossy_to_lossy__imessage;
 	}
 	reordering [label="Do you want to be
 		able to reorder the
@@ -137,10 +138,17 @@ digraph apple_photos {
 		recipients have
 		iMessage (blue
 		bubbles)?"]; // are you sure everyone has an apple device
-	far_away [label="Are the
-		recipients in a
-		different
-		location?"];
+	video__imessage [label="Are you
+		sending a
+		video?"];
+	{
+		node [label="Are the
+			recipients in a
+			different
+			location?"];
+		far_away;
+		far_away__imessage;
+	}
 	have_apple__airdrop [label="Do the
 		recipients
 		have an Apple
@@ -151,7 +159,6 @@ digraph apple_photos {
 	airdrop__from_ios [label="Are you
 		using an iOS
 		device?"];
-	airdrop_ios_note [shape=rect, style="rounded"]; // certain type's metadata lost
 	{
 		node [label="Do you want to avoid
 			coverting lossless
@@ -159,13 +166,12 @@ digraph apple_photos {
 			images (e.g. PNG to
 			JPEG)?"];
 		avoid_convert_type_lossless_to_lossy__airdrop_mac;
-		//avoid_convert_type_lossless_to_lossy__imessage;
+		avoid_convert_type_lossless_to_lossy__imessage;
 	}
 	airdrop_mac_mixed [label="Are you sharing
 		both videos and
 		'Live Photos'
 		the same time?"];
-	airdrop_mac_note [shape=rect, style="rounded"]; // if photo/live: choose "Photos". if videos, can use finder, and drag into Photos, but certain metadata will be lost
 
 	edge [labeldistance=3];
 
@@ -191,12 +197,21 @@ digraph apple_photos {
 	reordering -> SOL [taillabel="Yes"];
 
 	have_apple__imessage -> avoid_downres__email_or_icps [taillabel="No"];
-	have_apple__imessage -> video__imessage [taillabel="Yes"];
+	have_apple__imessage -> avoid_convert_type_lossy_to_lossy__imessage [taillabel="Yes"];
+
+	avoid_convert_type_lossy_to_lossy__imessage -> avoid_convert_type_lossless_to_lossy__imessage [taillabel="No"];
+	avoid_convert_type_lossy_to_lossy__imessage -> far_away__imessage [taillabel="Yes"];
+
+	avoid_convert_type_lossless_to_lossy__imessage -> video__imessage [taillabel="No"];
+	avoid_convert_type_lossless_to_lossy__imessage -> far_away__imessage [taillabel="Yes"];
+
+	far_away__imessage -> airdrop__from_ios [taillabel="No"];
+	far_away__imessage -> SOL [taillabel="Yes"];
 
 	video__imessage -> avoid_downres__video__imessage [taillabel="Yes"];
 	video__imessage -> imessage [taillabel="No"];
 
-	avoid_downres__video__imessage -> avoid_convert_type_lossy_to_lossy__email [taillabel="Yes"];
+	avoid_downres__video__imessage -> have_live_photo_etc__email [taillabel="Yes"];
 	avoid_downres__video__imessage -> imessage [taillabel="No"];
 
 	far_away -> have_apple__airdrop [taillabel="No"];
@@ -206,17 +221,13 @@ digraph apple_photos {
 	have_apple__airdrop -> airdrop__from_ios [taillabel="Yes"];
 
 	airdrop__from_ios -> avoid_convert_type_lossless_to_lossy__airdrop_mac [taillabel="No"];
-	airdrop__from_ios -> airdrop_ios_note [taillabel="Yes"];
-
-	airdrop_ios_note -> airdrop;
+	airdrop__from_ios -> airdrop [taillabel="Yes"];
 
 	avoid_convert_type_lossless_to_lossy__airdrop_mac -> airdrop_mac_mixed [taillabel="No"];
 	avoid_convert_type_lossless_to_lossy__airdrop_mac -> SOL [taillabel="Yes"];
 
-	airdrop_mac_mixed -> airdrop_mac_note [taillabel="No"];
+	airdrop_mac_mixed -> airdrop [taillabel="No"];
 	airdrop_mac_mixed -> SOL [taillabel="Yes"];
-
-	airdrop_mac_note -> airdrop;
 
 	/* avoid_convert_type_lossy_to_lossy -> avoid_downres__email [taillabel="No"];
 	avoid_convert_type_lossy_to_lossy -> SOL [taillabel="Yes"]; */
@@ -262,11 +273,11 @@ digraph apple_photos {
 		rank=same;
 		avoid_convert_type_lossless_to_lossy__airdrop_mac;
 		avoid_downres__email_or_icps; //far_away;
-	}
+	}*/
 
 	{
 		SOL -> icps -> email -> airdrop -> imessage [ style=invis ];
-	} */
+	}
 
 	/* {
 		rank = same;
