@@ -22,4 +22,4 @@ function defaultTask() {
     .pipe(gulp.dest('./build'));
 }
 
-gulp.task('watch', () => gulp.watch('src/**/*.dot', ['default']));
+gulp.task('watch', () => defaultTask() || gulp.watch('src/**/*.dot', ['default']));
