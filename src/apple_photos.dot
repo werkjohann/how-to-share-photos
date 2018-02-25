@@ -13,370 +13,422 @@
 // both then: 11.2.5
 
 digraph apple_photos {
-	graph [fontname = "helvetica"];
+	labelloc="t";
+	label=<<b>Guide to Sharing with Apple Photos</b><br/>by Johann Werk>;
+
+	graph [fontname = "helvetica"]; #penwidth=0
 	node [fontname = "helvetica"];
 	edge [fontname = "helvetica"];
-
-
-	#rankdir=LR;
 	{
-		node [shape=rect, style="rounded", peripheries=2];
-		want_to_share [label="I want to share some photos/videos!"];
-	}
-
-	notes [shape=rect style="rounded" label="Additional Notes:\l"
-		+"• If you are sharing from macOS Photos and want to share location data be sure to enable \"Include location information for published items\" in Preferences. (iOS always shares location information.)\l"
-		+"• If you want to avoid avoid type conversion (e.g. recompression due to HEIF to JPEG conversion) as much as possible in \"Transfer to Mac or PC\" in Settings > Photos. (There is no option for this in macOS Photos.) Note too that Photos will always send certain items like edited photos and 'Portrait' photos as JPEG."];
-
-	{
-		node [shape=octagon, penwidth=4 label="S.O.L." width=2 height=2 label="There is no
-				way to do this
-				from Apple
-				Photos."];
-		SOL1;
-    SOL2;
-    SOL3;
-    SOL4;
-    SOL5;
-    SOL6;
-    //SOL7;
-    //SOL8;
-    SOL9;
-    SOL10;
-    SOL11;
-    SOL12;
-		SOL13;
-		SOL14;
-	}
-	{
+		rank=max;
 		node [shape=rect, style="rounded", penwidth=4];
-		rank = max;
-		rankdir = LR;
-
-		// SOL;
 		email [label="Use Email
 			Notes:\l"
 			+"• When sharing from iOS, 'Slo-mo' videos will lose their type tagging.\l"
-			+"• When sharing from macOS, screenshots will will lose their type tagging, and 'Slo-mo' videos will lose their type tagging and most other metadata (including location).\l"
-			+"• When given the option be sure to choose \"Actual Size\" to preserve the highest possible quality.\l"
-			+"• Enabling Mail Drop is recommended so that your email does not become too large to send."];
+			+"• When sharing from macOS, screenshots will will lose their type tagging, \l"
+			+"      and 'Slo-mo' videos will lose their type tagging and most other \l"
+			+"      metadata (including location).\l"
+			+"• When given the option be sure to choose \"Actual Size\" to preserve the \l"
+			+"      highest possible quality.\l"
+			+"• Enabling Mail Drop is recommended so that your email does not become \l"
+			+"      too large to send.\l"];
 		imessage [label="Use iMessage
 			Notes:\l"
-			+"• While you could send multiple photos/videos via iMessage, it's probably not a great idea to spam your friends and family that way. If you do try this, note that the Photos app on macOS will not allow sending multiple videos."];
+			+"• While you could send multiple photos/videos via iMessage, it's \l"
+			+"      probably not a great idea to spam your friends and family that \l"
+			+"      way. If you do try this, note that the Photos app on macOS will \l"
+			+"      not allow sending multiple videos.\l"];
 		icps [label="Use iCloud Photo Sharing
-			Notes:\l"
-			+"• If any recipent doesn't have an Apple device you will need to turn on \"Public Website\" for the Shared Album.\l"
-			+"• Shared Albums default to allowing other people add photos/videos to them.\l"
-			+"• Screenshots, 'Slo-mo' videos, and 'Time-lapse' videos will lose their type tagging and most other metadata (including location)."];
+		Notes:\l"
+		+"• If any recipient doesn't have an Apple device you will need to turn on \l"
+		+"      \"Public Website\" for the Shared Album.\l"
+		+"• Shared Albums default to allowing other people add photos/videos to them.\l"
+		+"• Screenshots, 'Slo-mo' videos, and 'Time-lapse' videos will lose their \l"
+		+"      type tagging and most other metadata (including location).\l"];
 		// export / import (skipping for now, because this is only Mac, and also complicated by original/non wonk. And it's really not a "sharing option")
 
 		// 			AirDrop preserves the most quality and metadata.
 		airdrop [label="Use AirDrop
-			Notes:\l"
-			+"• When sharing from iOS, 'Slo-mo' videos will lose their type tagging.\l"
-			+"• When sharing from macOS, screenshots will lose their type tagging, and 'Slo-mo' videos will lose their type tagging and most other metadata (including location).\l"
-			+"• When sharing to macOS, be sure to choose \"Open in Photos\", otherwise 'Live Photos' will not send correctly. You will only see this option reliably if you do not have AirDrop open in the Finder.\l"
-			+"• If you AirDrop to your own Mac you are not given the option above, so 'Live Photos' will never send correctly.\l"
-			+"• The Photos app can have to go through a lengthy \"Preparing...\" phase before sharing your photos/videos. When this happens it can silently fail to initiate AirDrop. You may have to tap to AirDrop again after this completes."];
+		Notes:\l"
+		+"• When sharing from iOS, 'Slo-mo' videos will lose their type tagging.\l"
+		+"• When sharing from macOS, screenshots will lose their type tagging, \l"
+		+"      and 'Slo-mo' videos will lose their type tagging and most other \l"
+		+"      metadata (including location).\l"
+		+"• When sharing to macOS, be sure to choose \"Open in Photos\", otherwise \l"
+		+"      'Live Photos' will not send correctly. You will only see this \l"
+		+"      option reliably if you do not have AirDrop open in the Finder.\l"
+		+"• If you AirDrop to your own Mac you are not given the option above, so \l"
+		+"      'Live Photos' will never send correctly.\l"
+		+"• The Photos app can have to go through a lengthy \"Preparing...\" phase \l"
+		+"      before sharing your photos/videos. When this happens it can silently \l"
+		+"      fail to initiate AirDrop. You may have to tap to AirDrop again \l"
+		+"      after this completes.\l"];
+	}
+	/*
+	// todo: have notes as to why each of these works given the choices
+	airdrop [label="
+		TODO: reconverted editted/portriat
+		intermitent fail:
+		from-ios: slo-mo lost type tag.
+		from-Mac: slo-mo, screenshot lost type tag.
+		mac note: if photo/live: choose "Photos". if videos, can use finder, and drag into Photos, but certain metadata will be lost
+		If you AirDrop to a Mac be sure the recipient chooses to ___ - which is not the default option - otherwise Live Photos, ____ will not send correctly.
+		(If you try to AirDrop to your own Mac the photos are automatically sent to the Finder, so Live Photos, ____ will never send correctly.)"];
+		todo: test airdrop to own iPhone? (from mac?)
+		todo: test airdop from-mac+dnd
+	email [label="Send via Email
+		todo: check all type imports
+		w/ maildrop, w/ actual size
+		from-ios: no video downres, no png->jpeg, DOES heif -> JPEG,
+		from-mac: png->jpeg, video downres, heif -> JPEG,
+		from-mac: dnd: no video downres, no png->jpeg, DOES heif -> JPEG,
+		note about actual size, JPEG conversion, lossy special types"];
+		ios: save all w/ maildrop buggy (should cheeck mac too) ... or maybe not, just slow?!?!
+	imessage [label="Send via iMessage
+		ios-to-ios:
+			- does lossy to lossy
+			- does png to jpeg.
+			- slo mo, selfie, and screenshot tagging lost
+			- scaled down video
+		mac-to-ios:
+			- can't choose >1 video
+			- same as ios-to-ios
+		mac-to-ios: dnd: crashed Photos the first time. second time I had all the images in the message, but it only sent some of them (the others were left in the text feild)
+			- same as ios-to-ios
+			- added lost types:  live.
+		make sure not to MMS???"];
+	icps [label="Send via iCloud Photo Sharing
+		todo: note about public links, as needed
+		steps for limits: https://support.apple.com/en-us/HT202786, https://support.apple.com/en-us/HT202299
+		lossy"];
+  */
+
+	{
+
+		#rankdir=LR;
+		{
+			node [shape=rect, style="rounded", peripheries=2];
+			want_to_share [label="I want to share some photos/videos!"];
+		}
+
+		notes [shape=rect style="rounded" label="Additional Notes:\l"
+			+"• If you are sharing from macOS Photos and want to share location data be \l"
+			+"      sure to enable \"Include location information for published items\" \l"
+			+"      in Preferences. (iOS always shares location information.)\l"
+			+"• If sharing from iOS Photos fails with a mysterious error, try disabling \l"
+			+"      Low Power Mode.\l"
+			+"• If you want to avoid avoid type conversion (e.g. recompression due to HEIF\l"
+			+"       to JPEG conversion) as much as possible in \"Transfer to Mac or PC\" \l"
+			+"      in Settings > Photos. (There is no option for this in macOS Photos.) \l"
+			+"      Note too that Photos will always send certain items like edited photos \l"
+			+"      and 'Portrait' photos as JPEG.\l"
+			+"• Tested using a MacBook Pro (2017) running macOS 10.13.2 (17C205) / Photos \l"
+			+"      Version 3.0 (3251.12.190) and an iPhone X and iPhone 7 running \l"
+			+"      iOS 11.2.5 (15D60).\l"];
+
+		{
+			node [shape=octagon penwidth=4 label="S.O.L." width=2 height=2 label="There is no
+					way to do this
+					from Apple
+					Photos."];
+			#rank=same;
+			SOL1;
+	    SOL2;
+	    SOL3;
+	    SOL4;
+	    SOL5;
+	    SOL6;
+	    //SOL7;
+	    //SOL8;
+	    SOL9;
+	    SOL10;
+	    SOL11;
+	    SOL12;
+			SOL13;
+			SOL14;
+		}
+			#rank = max;
+			#rankdir = LR;
+
+
+
+		node [shape=diamond];
+
+		want_to_share -> retouch;
+
+		retouch [label="Do you want
+			recipients to see
+			any retouching you
+			do after the
+			photos/videos are
+			shared?"];
+		editable [label="Do you want the
+			photos/videos to be
+			fully editable (as
+			if the recipients
+			took them)?"];
+		editable_portrait_etc [label="Do you want to share
+			'Portrait', 'Burst',
+			or 'Slo-mo'
+			photos/videos so that
+			the recipients can
+			edit them?"];
+		multiple_photos [label="Do you have
+			multiple
+			photos to
+			share?"];
+		want_collection [label="Do you want to share
+			a collection of
+			photos that you (and
+			possibly others) can
+			add to over time?"];
+		{
+			node [label="Do you want to
+				avoid type
+				conversion as
+				much as
+				possible?"];
+	    # todo: note on how to set such up, less quality, larger size. should test editted video
+			avoid_convert_type_lossy_to_lossy__icps;
+			avoid_convert_type_lossy_to_lossy__email;
+			avoid_convert_type_lossy_to_lossy__imessage;
+		}
+		reordering [label="Do you want to be
+			able to reorder the
+			photos/videos in the
+			shared collection
+			after sharing them?"];
+		{
+			node [label="Do you want to
+				avoid downsampling
+				(reducing resolution)?"];
+			avoid_downres__collection;
+			avoid_downres__email_or_icps;
+			avoid_downres__video__imessage;
+		}
+		have_apple__imessage [label="Do the
+			recipients have
+			iMessage (blue
+			bubbles)?"];
+	    // are you sure everyone has an apple device
+		video__imessage [label="Are you
+			sending a
+			video?"];
+		{
+			node [label="Are the
+				recipients in a
+				different
+				location?"];
+			far_away;
+			far_away__imessage;
+		}
+		have_apple__airdrop [label="Do the
+			recipients
+			have an Apple
+			device?"];
+		have_live_photo_etc__email [label="Are you
+			sharing any
+			'Live Photos'?"];
+		have_anim_gif	[label="Are you
+			sharing any
+			animated
+			GIFs?"];
+		{
+			node [label="What kind of
+				device are
+				you using?"];
+			from_ios__airdrop;
+			from_ios__email;
+			from_ios__icps;
+		}
+		{
+			node [label="Do you want to avoid
+				converting lossless
+				images to lossy
+				images (e.g. PNG to
+				JPEG)?"];
+			avoid_convert_type_lossless_to_lossy__airdrop_mac;
+			avoid_convert_type_lossless_to_lossy__imessage;
+			avoid_convert_type_lossless_to_lossy__icps;
+			avoid_convert_type_lossless_to_lossy__email_mac;
+		}
+		airdrop_to_mac [label="Do the
+			recipients
+			each have a Mac?"];
+		airdrop_to_mac_mixed [label="Are you sharing
+			both videos and
+			'Live Photos'
+			the same time?"];
+		airdrop_to_mac_mixed_note [label="Be sure the
+			recipients close
+			any AirDrop
+			windows they
+			have open." shape=rect style="rounded"];
+
+
+		edge [labeldistance=3];
+
+		retouch -> editable [taillabel="No"];
+		retouch -> SOL1 [taillabel="Yes"];
+
+		editable -> multiple_photos [taillabel="No"];
+		editable -> editable_portrait_etc [taillabel="Yes"];
+
+		editable_portrait_etc -> multiple_photos [taillabel="No"];
+		editable_portrait_etc -> SOL2 [taillabel="Yes"];
+
+		multiple_photos -> have_apple__imessage [taillabel="No"];
+		multiple_photos -> want_collection [taillabel="Yes"];
+
+		want_collection -> far_away [taillabel="No"];
+		want_collection -> avoid_downres__collection [taillabel="Yes"];
+
+		avoid_downres__collection -> reordering [taillabel="No"];
+		avoid_downres__collection -> SOL3 [taillabel="Yes"];
+
+		reordering -> avoid_convert_type_lossy_to_lossy__icps [taillabel="No"];
+		reordering -> SOL4 [taillabel="Yes"];
+
+		have_apple__imessage -> avoid_downres__email_or_icps [taillabel="No"];
+		have_apple__imessage -> avoid_convert_type_lossy_to_lossy__imessage [taillabel="Yes"];
+
+		avoid_convert_type_lossy_to_lossy__imessage -> avoid_convert_type_lossless_to_lossy__imessage [taillabel="No"];
+		avoid_convert_type_lossy_to_lossy__imessage -> far_away__imessage [taillabel="Yes"];
+
+		avoid_convert_type_lossless_to_lossy__imessage -> video__imessage [taillabel="No"];
+		avoid_convert_type_lossless_to_lossy__imessage -> far_away__imessage [taillabel="Yes"];
+
+		far_away__imessage -> from_ios__airdrop [taillabel="No"];
+		far_away__imessage -> SOL5 [taillabel="Yes"];
+
+		video__imessage -> avoid_downres__video__imessage [taillabel="Yes"];
+		video__imessage -> imessage [taillabel="No"];
+
+		avoid_downres__video__imessage -> have_live_photo_etc__email [taillabel="Yes"];
+		avoid_downres__video__imessage -> imessage [taillabel="No"];
+
+		far_away -> have_apple__airdrop [taillabel="No"];
+		far_away -> avoid_downres__email_or_icps [taillabel="Yes"];
+
+		have_apple__airdrop -> avoid_downres__email_or_icps [taillabel="No"];
+		have_apple__airdrop -> from_ios__airdrop [taillabel="Yes"];
+
+		from_ios__airdrop -> avoid_convert_type_lossless_to_lossy__airdrop_mac [taillabel="Mac"];
+		from_ios__airdrop -> airdrop [taillabel="iOS"];
+
+		avoid_convert_type_lossless_to_lossy__airdrop_mac -> airdrop_to_mac [taillabel="No"];
+		avoid_convert_type_lossless_to_lossy__airdrop_mac -> SOL6 [taillabel="Yes"];
+
+		airdrop_to_mac -> airdrop_to_mac_mixed [taillabel="Yes"];
+		airdrop_to_mac -> airdrop [taillabel="No"];
+
+		airdrop_to_mac_mixed -> airdrop [taillabel="No"];
+		airdrop_to_mac_mixed -> airdrop_to_mac_mixed_note [taillabel="Yes"];
+
+		airdrop_to_mac_mixed_note -> airdrop;
+
+		/* avoid_convert_type_lossy_to_lossy -> avoid_downres__email [taillabel="No"];
+		avoid_convert_type_lossy_to_lossy -> SOL8 [taillabel="Yes"];
+	    */
+
+		avoid_downres__email_or_icps -> avoid_convert_type_lossy_to_lossy__icps [taillabel="No"];
+		avoid_downres__email_or_icps -> avoid_convert_type_lossy_to_lossy__email [taillabel="Yes"];
+
+		avoid_convert_type_lossy_to_lossy__icps -> avoid_convert_type_lossless_to_lossy__icps [taillabel="No"];
+		avoid_convert_type_lossy_to_lossy__icps -> SOL9 [taillabel="Yes"];
+
+		avoid_convert_type_lossless_to_lossy__icps -> from_ios__icps [taillabel="No"];
+		avoid_convert_type_lossless_to_lossy__icps -> SOL13 [taillabel="Yes"];
+
+		from_ios__icps -> icps [taillabel="Mac"];
+		from_ios__icps -> have_anim_gif [taillabel="iOS"];
+
+		have_anim_gif -> icps [taillabel="No"];
+		have_anim_gif -> SOL14 [taillabel="Yes"];
+
+		avoid_convert_type_lossy_to_lossy__email -> have_live_photo_etc__email [taillabel="No"];
+		avoid_convert_type_lossy_to_lossy__email -> SOL10 [taillabel="Yes"];
+
+		have_live_photo_etc__email -> from_ios__email [taillabel="No"];
+	    // todo: add recipient device check
+		have_live_photo_etc__email -> SOL11 [taillabel="Yes"];
+
+		from_ios__email -> avoid_convert_type_lossless_to_lossy__email_mac [taillabel="Mac"];
+		from_ios__email -> email [taillabel="iOS"];
+
+		avoid_convert_type_lossless_to_lossy__email_mac -> email [taillabel="No"];
+		avoid_convert_type_lossless_to_lossy__email_mac -> SOL12 [taillabel="Yes"];
+
+		{
+			rankdir = LR;
+			rank=same;
+			SOL12;
+			SOL14;
+			avoid_convert_type_lossless_to_lossy__email_mac;
+			have_anim_gif;
+			avoid_convert_type_lossless_to_lossy__email_mac -> SOL12 [ style=invis ];
+			SOL14 -> have_anim_gif [ style=invis ];
+			/* SOL12 -> email [ style=invis ];
+			SOL14 -> icps [ style=invis ]; */
+		}
+
+		{
+			rankdir = LR;
+			want_to_share -> notes [ style=invis ];
+			retouch -> notes [ style=invis ];
+		}
+
+		/* {
+			rank=same;
+			airdrop_ios_note;
+			airdrop_mac_note;
+		}
+
+		{
+			rank=same;
+			avoid_convert_type_lossy_to_lossy__collection;
+			far_away;
+		}
+
+		{
+			rank = same;
+			have_apple__airdrop;
+			avoid_downres__collection;
+		}
+
+		/* {
+			rank = same;
+			reordering;
+			avoid_convert_type_lossy_to_lossy;
+		} */
 
 		/*
-		// todo: have notes as to why each of these works given the choices
-		airdrop [label="
-			TODO: reconverted editted/portriat
-			intermitent fail:
-			from-ios: slo-mo lost type tag.
-			from-Mac: slo-mo, screenshot lost type tag.
-			mac note: if photo/live: choose "Photos". if videos, can use finder, and drag into Photos, but certain metadata will be lost
-			If you AirDrop to a Mac be sure the recipient chooses to ___ - which is not the default option - otherwise Live Photos, ____ will not send correctly.
-			(If you try to AirDrop to your own Mac the photos are automatically sent to the Finder, so Live Photos, ____ will never send correctly.)"];
-			todo: test airdrop to own iPhone? (from mac?)
-			todo: test airdop from-mac+dnd
-		email [label="Send via Email
-			todo: check all type imports
-			w/ maildrop, w/ actual size
-			from-ios: no video downres, no png->jpeg, DOES heif -> JPEG,
-			from-mac: png->jpeg, video downres, heif -> JPEG,
-			from-mac: dnd: no video downres, no png->jpeg, DOES heif -> JPEG,
-			note about actual size, JPEG conversion, lossy special types"];
-			ios: save all w/ maildrop buggy (should cheeck mac too) ... or maybe not, just slow?!?!
-		imessage [label="Send via iMessage
-			ios-to-ios:
-				- does lossy to lossy
-				- does png to jpeg.
-				- slo mo, selfie, and screenshot tagging lost
-				- scaled down video
-			mac-to-ios:
-				- can't choose >1 video
-				- same as ios-to-ios
-			mac-to-ios: dnd: crashed Photos the first time. second time I had all the images in the message, but it only sent some of them (the others were left in the text feild)
-				- same as ios-to-ios
-				- added lost types:  live.
-			make sure not to MMS???"];
-		icps [label="Send via iCloud Photo Sharing
-			todo: note about public links, as needed
-			steps for limits: https://support.apple.com/en-us/HT202786, https://support.apple.com/en-us/HT202299
-			lossy"];
-    */
+		{
+			rank=same;
+			avoid_convert_type_lossless_to_lossy__airdrop_mac;
+			avoid_downres__email_or_icps;
+	    //far_away;
+		}*/
+
+		/* {
+			SOL -> icps -> email -> airdrop -> imessage [ style=invis ];
+		} */
+
+		/* {
+			rank = same;
+			have_apple__imessage -> want_collection [ style=invis ];
+			rankdir = LR;
+		}
+
+		{
+			rank = same;
+			have_live_photo_etc__email -> icps [ style=invis ];
+			rankdir = LR;
+		} */
+
+
+
 	}
-
-	node [shape=diamond];
-
-	want_to_share -> retouch;
-
-	retouch [label="Do you want
-		recipients to see
-		any retouching you
-		do after the
-		photos/videos are
-		shared?"];
-	editable [label="Do you want the
-		photos/videos to be
-		fully editable (as
-		if the recipients
-		took them)?"];
-	editable_portrait_etc [label="Do you want to share
-		'Portrait', 'Burst',
-		or 'Slo-mo'
-		photos/videos so that
-		the recipients can
-		edit them?"];
-	multiple_photos [label="Do you have
-		multiple
-		photos to
-		share?"];
-	want_collection [label="Do you want to share
-		a collection of
-		photos that you (and
-		possibly others) can
-		add to over time?"];
-	{
-		node [label="Do you want to
-			avoid type
-			conversion as
-			much as
-			possible?"];
-    # todo: note on how to set such up, less quality, larger size. should test editted video
-		avoid_convert_type_lossy_to_lossy__icps;
-		avoid_convert_type_lossy_to_lossy__email;
-		avoid_convert_type_lossy_to_lossy__imessage;
-	}
-	reordering [label="Do you want to be
-		able to reorder the
-		photos/videos in the
-		shared collection
-		after sharing them?"];
-	{
-		node [label="Do you want to
-			avoid downsampling
-			(reducing resolution)?"];
-		avoid_downres__collection;
-		avoid_downres__email_or_icps;
-		avoid_downres__video__imessage;
-	}
-	have_apple__imessage [label="Do the
-		recipients have
-		iMessage (blue
-		bubbles)?"];
-    // are you sure everyone has an apple device
-	video__imessage [label="Are you
-		sending a
-		video?"];
-	{
-		node [label="Are the
-			recipients in a
-			different
-			location?"];
-		far_away;
-		far_away__imessage;
-	}
-	have_apple__airdrop [label="Do the
-		recipients
-		have an Apple
-		device?"];
-	have_live_photo_etc__email [label="Are you
-		sharing any
-		'Live Photos'?"];
-	have_anim_gif	[label="Are you
-		sharing any
-		animated
-		GIFs?"];
-	{
-		node [label="What kind of
-			device are
-			you using?"];
-		from_ios__airdrop;
-		from_ios__email;
-		from_ios__icps;
-	}
-	{
-		node [label="Do you want to avoid
-			coverting lossless
-			images to lossy
-			images (e.g. PNG to
-			JPEG)?"];
-		avoid_convert_type_lossless_to_lossy__airdrop_mac;
-		avoid_convert_type_lossless_to_lossy__imessage;
-		avoid_convert_type_lossless_to_lossy__icps;
-		avoid_convert_type_lossless_to_lossy__email_mac;
-	}
-	airdrop_to_mac [label="Do the
-		recipients
-		each have a Mac?"];
-	airdrop_to_mac_mixed [label="Are you sharing
-		both videos and
-		'Live Photos'
-		the same time?"];
-	airdrop_to_mac_mixed_note [label="Be sure the
-		recipients close
-		any AirDrop
-		windows they
-		have open." shape=rect style="rounded"];
-
-
-	edge [labeldistance=3];
-
-	retouch -> editable [taillabel="No"];
-	retouch -> SOL1 [taillabel="Yes"];
-
-	editable -> multiple_photos [taillabel="No"];
-	editable -> editable_portrait_etc [taillabel="Yes"];
-
-	editable_portrait_etc -> multiple_photos [taillabel="No"];
-	editable_portrait_etc -> SOL2 [taillabel="Yes"];
-
-	multiple_photos -> have_apple__imessage [taillabel="No"];
-	multiple_photos -> want_collection [taillabel="Yes"];
-
-	want_collection -> far_away [taillabel="No"];
-	want_collection -> avoid_downres__collection [taillabel="Yes"];
-
-	avoid_downres__collection -> reordering [taillabel="No"];
-	avoid_downres__collection -> SOL3 [taillabel="Yes"];
-
-	reordering -> avoid_convert_type_lossy_to_lossy__icps [taillabel="No"];
-	reordering -> SOL4 [taillabel="Yes"];
-
-	have_apple__imessage -> avoid_downres__email_or_icps [taillabel="No"];
-	have_apple__imessage -> avoid_convert_type_lossy_to_lossy__imessage [taillabel="Yes"];
-
-	avoid_convert_type_lossy_to_lossy__imessage -> avoid_convert_type_lossless_to_lossy__imessage [taillabel="No"];
-	avoid_convert_type_lossy_to_lossy__imessage -> far_away__imessage [taillabel="Yes"];
-
-	avoid_convert_type_lossless_to_lossy__imessage -> video__imessage [taillabel="No"];
-	avoid_convert_type_lossless_to_lossy__imessage -> far_away__imessage [taillabel="Yes"];
-
-	far_away__imessage -> from_ios__airdrop [taillabel="No"];
-	far_away__imessage -> SOL5 [taillabel="Yes"];
-
-	video__imessage -> avoid_downres__video__imessage [taillabel="Yes"];
-	video__imessage -> imessage [taillabel="No"];
-
-	avoid_downres__video__imessage -> have_live_photo_etc__email [taillabel="Yes"];
-	avoid_downres__video__imessage -> imessage [taillabel="No"];
-
-	far_away -> have_apple__airdrop [taillabel="No"];
-	far_away -> avoid_downres__email_or_icps [taillabel="Yes"];
-
-	have_apple__airdrop -> avoid_downres__email_or_icps [taillabel="No"];
-	have_apple__airdrop -> from_ios__airdrop [taillabel="Yes"];
-
-	from_ios__airdrop -> avoid_convert_type_lossless_to_lossy__airdrop_mac [taillabel="Mac"];
-	from_ios__airdrop -> airdrop [taillabel="iOS"];
-
-	avoid_convert_type_lossless_to_lossy__airdrop_mac -> airdrop_to_mac [taillabel="No"];
-	avoid_convert_type_lossless_to_lossy__airdrop_mac -> SOL6 [taillabel="Yes"];
-
-	airdrop_to_mac -> airdrop_to_mac_mixed [taillabel="Yes"];
-	airdrop_to_mac -> airdrop [taillabel="No"];
-
-	airdrop_to_mac_mixed -> airdrop [taillabel="No"];
-	airdrop_to_mac_mixed -> airdrop_to_mac_mixed_note [taillabel="Yes"];
-
-	airdrop_to_mac_mixed_note -> airdrop;
-
-	/* avoid_convert_type_lossy_to_lossy -> avoid_downres__email [taillabel="No"];
-	avoid_convert_type_lossy_to_lossy -> SOL8 [taillabel="Yes"];
-    */
-
-	avoid_downres__email_or_icps -> avoid_convert_type_lossy_to_lossy__icps [taillabel="No"];
-	avoid_downres__email_or_icps -> avoid_convert_type_lossy_to_lossy__email [taillabel="Yes"];
-
-	avoid_convert_type_lossy_to_lossy__icps -> avoid_convert_type_lossless_to_lossy__icps [taillabel="No"];
-	avoid_convert_type_lossy_to_lossy__icps -> SOL9 [taillabel="Yes"];
-
-	avoid_convert_type_lossless_to_lossy__icps -> from_ios__icps [taillabel="No"];
-	avoid_convert_type_lossless_to_lossy__icps -> SOL13 [taillabel="Yes"];
-
-	from_ios__icps -> icps [taillabel="Mac"];
-	from_ios__icps -> have_anim_gif [taillabel="iOS"];
-
-	have_anim_gif -> icps [taillabel="No"];
-	have_anim_gif -> SOL14 [taillabel="Yes"];
-
-	avoid_convert_type_lossy_to_lossy__email -> have_live_photo_etc__email [taillabel="No"];
-	avoid_convert_type_lossy_to_lossy__email -> SOL10 [taillabel="Yes"];
-
-	have_live_photo_etc__email -> from_ios__email [taillabel="No"];
-    // todo: add recipient device check
-	have_live_photo_etc__email -> SOL11 [taillabel="Yes"];
-
-	from_ios__email -> avoid_convert_type_lossless_to_lossy__email_mac [taillabel="Mac"];
-	from_ios__email -> email [taillabel="iOS"];
-
-	avoid_convert_type_lossless_to_lossy__email_mac -> email [taillabel="No"];
-	avoid_convert_type_lossless_to_lossy__email_mac -> SOL12 [taillabel="Yes"];
-
-	/* {
-		rank=same;
-		airdrop_ios_note;
-		airdrop_mac_note;
-	}
-
-	{
-		rank=same;
-		avoid_convert_type_lossy_to_lossy__collection;
-		far_away;
-	}
-
-	{
-		rank = same;
-		have_apple__airdrop;
-		avoid_downres__collection;
-	}
-
-	/* {
-		rank = same;
-		reordering;
-		avoid_convert_type_lossy_to_lossy;
-	} */
-
-	/*
-	{
-		rank=same;
-		avoid_convert_type_lossless_to_lossy__airdrop_mac;
-		avoid_downres__email_or_icps;
-    //far_away;
-	}*/
-
-	/* {
-		SOL -> icps -> email -> airdrop -> imessage [ style=invis ];
-	} */
-
-	/* {
-		rank = same;
-		have_apple__imessage -> want_collection [ style=invis ];
-		rankdir = LR;
-	}
-
-	{
-		rank = same;
-		have_live_photo_etc__email -> icps [ style=invis ];
-		rankdir = LR;
-	} */
-
-
-
-
 }
 
 // taillabel, headlabel, lp
