@@ -29,14 +29,14 @@ function dotTask() {
     }))
     .pipe(ext.replace('svg'))
     .pipe(svgo())
-    .pipe(gulp.dest('./build'));
+    .pipe(gulp.dest('./docs'));
 }
 
 function htmlTask() {
   gulp.src('src/**/*.html')
     .pipe(tap(file => {
-      var svg = fs.readFileSync('build/apple_photos.svg', 'utf8');
+      var svg = fs.readFileSync('docs/apple_photos.svg', 'utf8');
       file.contents = Buffer.from(file.contents.toString().replace(/__SVG__/g, svg));
     }))
-    .pipe(gulp.dest('./build'));
+    .pipe(gulp.dest('./docs'));
 }
