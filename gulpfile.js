@@ -9,17 +9,13 @@ var svgo = require('gulp-svgo');
 var Viz = require('viz.js');
 
 gulp.task('dot', dotTask);
-gulp.task('html', htmlTask);
+gulp.task('default', ['dot'], htmlTask);
 
-gulp.task('default', ['dot', 'html']);
-
-gulp.task('watch', ['default', '_watch']);
-
-gulp.task('_watch', () => gulp.watch('src/**/*', ['default']));
+gulp.task('watch', ['default'], () => gulp.watch('src/**/*', ['default']));
 
 
 function dotTask() {
-  gulp.src('src/**/*.dot')
+  return gulp.src('src/**/*.dot')
     .pipe(tap(file => {
       //try {
       file.contents = Buffer.from(Viz(file.contents.toString()));
@@ -33,7 +29,7 @@ function dotTask() {
 }
 
 function htmlTask() {
-  gulp.src('src/**/*.html')
+  return gulp.src('src/**/*.html')
     .pipe(tap(file => {
       var svg = fs.readFileSync('docs/apple_photos.svg', 'utf8');
       file.contents = Buffer.from(file.contents.toString().replace(/__SVG__/g, svg));
