@@ -1,4 +1,6 @@
 
+var fs = require('fs');
+
 var gulp = require('gulp');
 var tap = require('gulp-tap');
 var ext = require('gulp-ext');
@@ -6,9 +8,17 @@ var svgo = require('gulp-svgo');
 
 var Viz = require('viz.js');
 
-gulp.task('default', defaultTask);
+gulp.task('dot', dotTask);
+gulp.task('html', htmlTask);
 
-function defaultTask() {
+gulp.task('default', ['dot', 'html']);
+
+gulp.task('watch', ['default', '_watch']);
+
+gulp.task('_watch', () => gulp.watch('src/**/*', ['default']));
+
+
+function dotTask() {
   gulp.src('src/**/*.dot')
     .pipe(tap(file => {
       //try {
@@ -22,4 +32,11 @@ function defaultTask() {
     .pipe(gulp.dest('./build'));
 }
 
-gulp.task('watch', () => defaultTask() || gulp.watch('src/**/*.dot', ['default']));
+function htmlTask() {
+  gulp.src('src/**/*.html')
+    .pipe(tap(file => {
+      var svg = fs.readFileSync('build/apple_photos.svg', 'utf8');
+      file.contents = Buffer.from(file.contents.toString().replace(/__SVG__/g, svg));
+    }))
+    .pipe(gulp.dest('./build'));
+}

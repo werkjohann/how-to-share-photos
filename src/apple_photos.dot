@@ -13,12 +13,12 @@
 // both then: 11.2.5
 
 digraph apple_photos {
-	labelloc="t";
-	label=<<b>Guide to Sharing with Apple Photos</b><br/>by Johann Werk>;
+	//labelloc="t";
+	//label=<<b>Guide to Sharing with Apple Photos</b><br/>by Johann Werk>;
 
-	graph [fontname = "helvetica"]; #penwidth=0
-	node [fontname = "helvetica"];
-	edge [fontname = "helvetica"];
+	graph [fontname = "helvetica" fontsize=12]; #penwidth=0
+	node [fontname = "helvetica" fontsize=12];
+	edge [fontname = "helvetica" fontsize=12];
 	{
 		rank=max;
 		node [shape=rect, style="rounded", penwidth=4];
@@ -103,12 +103,16 @@ digraph apple_photos {
 		lossy"];
   */
 
+
 	{
 
 		#rankdir=LR;
 		{
 			node [shape=rect, style="rounded", peripheries=2];
 			want_to_share [label="I want to share some photos/videos!"];
+
+			title [penwidth=0 fontsize=14 label=<<b>Guide to Sharing with Apple Photos</b><br/>by Johann Werk>];
+			title -> want_to_share [style=invis];
 		}
 
 		notes [shape=rect style="rounded" label="Additional Notes:\l"
@@ -118,10 +122,10 @@ digraph apple_photos {
 			+"• If sharing from iOS Photos fails with a mysterious error, try disabling \l"
 			+"      Low Power Mode.\l"
 			+"• If you want to avoid avoid type conversion (e.g. recompression due to HEIF\l"
-			+"       to JPEG conversion) as much as possible in \"Transfer to Mac or PC\" \l"
-			+"      in Settings > Photos. (There is no option for this in macOS Photos.) \l"
-			+"      Note too that Photos will always send certain items like edited photos \l"
-			+"      and 'Portrait' photos as JPEG.\l"
+			+"      to JPEG conversion) as much as possible then choose \"Keep Originals\" \l"
+			+"      in \"Transfer to Mac or PC\" in Settings > Photos. (There is no option \l"
+			+"      for this in macOS Photos.) Note too that Photos will always send certain \l"
+			+"      items like edited photos and 'Portrait' photos as JPEG.\l"
 			+"• Tested using a MacBook Pro (2017) running macOS 10.13.2 (17C205) / Photos \l"
 			+"      Version 3.0 (3251.12.190) and an iPhone X and iPhone 7 running \l"
 			+"      iOS 11.2.5 (15D60).\l"];
@@ -275,7 +279,7 @@ digraph apple_photos {
 		editable -> editable_portrait_etc [taillabel="Yes"];
 
 		editable_portrait_etc -> multiple_photos [taillabel="No"];
-		editable_portrait_etc -> SOL2 [taillabel="Yes"];
+		editable_portrait_etc -> SOL2 [taillabel="Yes"+"     " labeldistance=1];
 
 		multiple_photos -> have_apple__imessage [taillabel="No"];
 		multiple_photos -> want_collection [taillabel="Yes"];
@@ -287,7 +291,7 @@ digraph apple_photos {
 		avoid_downres__collection -> SOL3 [taillabel="Yes"];
 
 		reordering -> avoid_convert_type_lossy_to_lossy__icps [taillabel="No"];
-		reordering -> SOL4 [taillabel="Yes"];
+		reordering -> SOL4 [taillabel="Yes"+"     " labeldistance=1];
 
 		have_apple__imessage -> avoid_downres__email_or_icps [taillabel="No"];
 		have_apple__imessage -> avoid_convert_type_lossy_to_lossy__imessage [taillabel="Yes"];
@@ -316,7 +320,7 @@ digraph apple_photos {
 		from_ios__airdrop -> avoid_convert_type_lossless_to_lossy__airdrop_mac [taillabel="Mac"];
 		from_ios__airdrop -> airdrop [taillabel="iOS"];
 
-		avoid_convert_type_lossless_to_lossy__airdrop_mac -> airdrop_to_mac [taillabel="No"];
+		avoid_convert_type_lossless_to_lossy__airdrop_mac -> airdrop_to_mac [taillabel="No"+"          " labeldistance=0];
 		avoid_convert_type_lossless_to_lossy__airdrop_mac -> SOL6 [taillabel="Yes"];
 
 		airdrop_to_mac -> airdrop_to_mac_mixed [taillabel="Yes"];
